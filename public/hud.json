@@ -1,7 +1,7 @@
 {
-    "name":"Lexogrine HUD",
-    "version":"1.4.0",
-    "author":"Lexogrine",
+    "name":"RÍSÍ HUD",
+    "version":"1.0.0",
+    "author":"Benni",
     "legacy": false,
     "radar": true,
     "killfeed": true,
