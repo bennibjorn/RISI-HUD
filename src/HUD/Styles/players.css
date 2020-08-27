@@ -51,9 +51,6 @@
     position: relative;
     height: 100%;
 }
-.teambox .player:last-child .player_data {
-    border-radius: 0 0 20px 20px;
-}
 
 .teambox.right .player .player_data {
     flex-direction: row-reverse;
@@ -101,9 +98,10 @@
     flex: 1;
     min-width: 0;
 }
-.teambox .player.active .player_data {
+
+/* .teambox .player.active .player_data {
     border: 2px solid white;
-}
+} */
 /*
 .teambox .player.active .player_data .active_border {
     position: absolute;
@@ -283,7 +281,9 @@
 }
 
 .teambox .player .hp_bar {
-    height: 2px;
+    position: absolute;
+    height: 100%;
+    transition: width 100ms ease-in;
 }
 .teambox.right .player .hp_bar {
     align-self: flex-end;

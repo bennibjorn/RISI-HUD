@@ -173,12 +173,7 @@
     align-items: center;
     overflow: hidden;
     background-color: var(--sub-panel-color);
-}
-#matchbar .team.left .logo {
-    justify-content: flex-end;
-}
-#matchbar .team.right .logo {
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 #matchbar .team .logo img {

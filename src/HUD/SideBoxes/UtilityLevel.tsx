@@ -12,7 +12,7 @@ interface Props {
 
 function utilityState(amount: number) {
   if (amount === 20) {
-    return "Full";
+    return "Critical!";
   }
   if (amount > 14) {
     return "Great";
