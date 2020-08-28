@@ -98,35 +98,6 @@
     flex: 1;
     min-width: 0;
 }
-
-/* .teambox .player.active .player_data {
-    border: 2px solid white;
-} */
-/*
-.teambox .player.active .player_data .active_border {
-    position: absolute;
-    width: 10px;
-    height: 70px;
-    align-self: center;
-    top: 0px;
-}
-
-.teambox.left .player.active .player_data .active_border {
-    right: -10px;
-}
-
-.teambox.right .player.active .player_data .active_border {
-    left: -10px;
-}
-
-.teambox.T .player.active .player_data .active_border {
-    background-color: var(--white-full);
-}
-
-.teambox.CT .player.active .player_data .active_border {
-    background-color: var(--white-full);
-}
-*/
 .teambox .player .row {
     flex: 1;
     display: flex;
@@ -172,14 +143,18 @@
 }
 
 .teambox .player .dead-stats .labels,
-.teambox .player .dead-stats .values {
+.teambox .player .dead-stats .values,
+.teambox .player .freezetime_KAD .labels,
+.teambox .player .freezetime_KAD .values {
     display: flex;
     flex-direction: row;
     flex: 1;
 }
 
 .teambox .player .dead-stats .labels .stat-label,
-.teambox .player .dead-stats .values .stat-value {
+.teambox .player .dead-stats .values .stat-value,
+.teambox .player .freezetime_KAD .labels .stat-label,
+.teambox .player .freezetime_KAD .values .stat-value {
     display: flex;
     flex: 1;
     align-items: center;
@@ -371,22 +346,6 @@ img.weapon.active {
 .teambox.left .roundkills-container {
     right: 135px;
 }
-/*
-img.weapon.active {
-    filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(0.5px 0.5px 1px white);
-}
-
-.teambox.right img.weapon.active {
-    filter: drop-shadow(-1px 0.5px 1px white) drop-shadow(1.5px 0.5px 1px white);
-}
-*/
-/*
-.player .primary_weapon img.active {
-    filter: drop-shadow(0.5px 0.5px 1px white) drop-shadow(0.5px 0.5px 1px white) invert(100%);
-}
-.teambox.right .player .primary_weapon img.active {
-    filter: drop-shadow(-1px 0.5px 1px white) drop-shadow(1.5px 0.5px 1px white) invert(100%);
-}*/
 .teambox.right .primary_weapon img,
 .teambox.right .secondary_weapon img, .teambox.right .weapon {
     transform: scaleX(-1);
@@ -476,4 +435,25 @@ img.weapon.active {
 }
 .teambox.T .player_side_stats .side_stat_row:first-child {
     color: var(--mainT);
+}
+.teambox .player .freezetime_KAD {
+    background-color: var(--main-panel-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 6rem;
+    height: 100%;
+    opacity: 1;
+    transition: opacity 0.75s;
+}
+
+.teambox .player .freezetime_KAD.hide {
+    opacity: 0;
+}
+
+.teambox.left .player .freezetime_KAD {
+    margin-left: 0.5rem;
+}
+.teambox.right .player .freezetime_KAD {
+    margin-right: 0.5rem;
 }

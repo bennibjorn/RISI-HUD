@@ -1,6 +1,5 @@
 # TODO:
 
-- Health bars bigger
 - Player avatars on observed players not rounded and repositioned
 - The whole observed thing refactor
 - KDA on buy phase

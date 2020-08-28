@@ -65,7 +65,7 @@ export default class Killfeed extends React.Component<any, { events: (BombEvent 
 	render() {
 		return (
 			<div className="killfeed">
-                {this.state.events.map(event => <Kill event={event}/>)}
+                {this.state.events.map((event, index) => <Kill key={index} event={event}/>)}
 			</div>
 		);
 	}

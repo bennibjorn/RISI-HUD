@@ -13,7 +13,7 @@ interface IProps {
 }
 export default class PlayerBox extends React.Component<IProps> {
   render() {
-    const { player } = this.props;
+    const { player, isObserved, isFreezetime } = this.props;
     const weapons: WeaponRaw[] = Object.values(player.weapons).map(weapon => ({ ...weapon, name: weapon.name.replace("weapon_", "") }));
     const primary = weapons.filter(weapon => !['C4', 'Pistol', 'Knife', 'Grenade'].includes(weapon.type))[0] || null;
     const secondary = weapons.filter(weapon => weapon.type === "Pistol")[0] || null;
@@ -21,7 +21,7 @@ export default class PlayerBox extends React.Component<IProps> {
     const isLeft = player.team.orientation === "left";
 
     return (
-      <div className={`player ${player.state.health === 0 ? "dead" : ""} ${this.props.isObserved ? 'active' : ''}`}>
+      <div className={`player ${player.state.health === 0 ? "dead" : ""} ${isObserved ? 'active' : ''}`}>
         <div className="player_data">
           <Avatar player={player} height={57} showSkull={false}/>
           <div className="dead-stats">
@@ -65,7 +65,18 @@ export default class PlayerBox extends React.Component<IProps> {
               </div>
               <div className="secondary_weapon">{primary && secondary ? <Weapon weapon={secondary.name} active={secondary.state === "active"} /> : ""}</div>
             </div>
-            <div className="active_border"></div>
+          </div>
+        </div>
+        <div className={`freezetime_KAD ${!isFreezetime ? 'hide' : ''}`}>
+          <div className="labels">
+            <div className="stat-label">K</div>
+            <div className="stat-label">A</div>
+            <div className="stat-label">D</div>
+          </div>
+          <div className="values">
+            <div className="stat-value">{player.stats.kills}</div>
+            <div className="stat-value">{player.stats.assists}</div>
+            <div className="stat-value">{player.stats.deaths}</div>
           </div>
         </div>
       </div>

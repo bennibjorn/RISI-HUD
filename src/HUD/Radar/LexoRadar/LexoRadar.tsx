@@ -22,12 +22,12 @@ class App extends React.Component<IProps> {
     }
   }
 
-  renderGrenade = (grenade: RadarGrenadeObject) => {
+  renderGrenade = (grenade: RadarGrenadeObject, index: number) => {
     if ("flames" in grenade) {
       return null;
     }
     return (
-      <div key={grenade.id} className={`grenade ${grenade.type} ${grenade.state} ${grenade.visible ? 'visible':'hidden'}`}
+      <div key={grenade.id + index} className={`grenade ${grenade.type} ${grenade.state} ${grenade.visible ? 'visible':'hidden'}`}
         style={{
           transform: `translateX(${grenade.position[0]}px) translateY(${grenade.position[1]}px)`,
         }}>
@@ -72,7 +72,7 @@ class App extends React.Component<IProps> {
       const position = this.props.parsePosition(bomb.position.split(", ").map(pos => Number(pos)), 30, config.config);
       if(!position) return null;
       return (
-        <div className={`bomb ${bomb.state} ${config.isVisible(bomb.position.split(", ").map(Number)[2]) ? 'visible':'hidden'}`}
+        <div key={config.id} className={`bomb ${bomb.state} ${config.isVisible(bomb.position.split(", ").map(Number)[2]) ? 'visible':'hidden'}`}
           style={{
             transform: `translateX(${position[0]}px) translateY(${position[1]}px)`
           }}>

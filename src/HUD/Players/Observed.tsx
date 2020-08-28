@@ -4,8 +4,6 @@ import Weapon from "./../Weapon/Weapon";
 import Avatar from "./Avatar";
 import TeamLogo from "./../MatchBar/TeamLogo";
 import "./../Styles/observed.css";
-import {apiUrl} from './../../api/api';
-import { getCountry } from "./../countries";
 import { ArmorHelmetCT, ArmorHelmetT, ArmorFullCT, ArmorFullT, HealthFullCT, HealthFullT, BulletsCT, BulletsT } from './../../assets/Icons';
 
 
@@ -36,7 +34,6 @@ export default class Observed extends React.Component<{ player: Player | null }>
 		if (!this.props.player) return '';
 		const { player } = this.props;
 		const { stats } = player;
-		const country = player.country || player.team.country;
 		const weapons = Object.values(player.weapons).map(weapon => ({ ...weapon, name: weapon.name.replace("weapon_", "") }));
 		const currentWeapon = weapons.filter(weapon => weapon.state === "active")[0];  
 		const grenades = weapons.filter(weapon => weapon.type === "Grenade");
@@ -51,9 +48,9 @@ export default class Observed extends React.Component<{ player: Player | null }>
 						<div className="real_name">{player.realName}</div>
 					</div>
 					<div className="grenade_container">
-						{grenades.map(grenade => [
-							<Weapon weapon={grenade.name} active={grenade.state === "active"} isGrenade />,
-							grenade.ammo_reserve === 2 ? <Weapon weapon={grenade.name} active={grenade.state === "active"} isGrenade /> : null
+						{grenades.map((grenade, index) => [
+							<Weapon key={grenade.name + index} weapon={grenade.name} active={grenade.state === "active"} isGrenade />,
+							grenade.ammo_reserve === 2 ? <Weapon key={index} weapon={grenade.name} active={grenade.state === "active"} isGrenade /> : null
 						])}
 						</div>
 				</div>
