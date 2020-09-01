@@ -77,19 +77,18 @@
 .teambox .player .player_data .avatar {
     width: 70px;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
 }
-.teambox.right .player .player_data .avatar {
-    justify-content: flex-start;
+.teambox .player .player_data .avatar img {
+    zoom: 300%;
+    position: relative;
+    top: 30px;
 }
 
 .teambox .player.dead .player_data .avatar {
     filter: grayscale(100%);
-}
-
-.teambox .player .player_data .avatar img {
-    border-radius:50%;
 }
 
 .teambox .player .player_data .player_stats {
@@ -293,8 +292,11 @@
     background-color: red;
 }
 
-
-
+.teambox .player .player_data .logo {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
 
 
 

@@ -8,7 +8,7 @@ export default class TeamLogo extends React.Component<{ team?: Team | I.Team | n
     if(!this.props.team) return null;
     return (
       <div className={`logo`}>
-          { this.props.team.logo ? <img src={`data:image/jpeg;base64,${this.props.team.logo}`} width={this.props.width} height={this.props.height} alt={'Team logo'} /> : ''}
+          { this.props.team.logo ? <img src={`data:image/jpeg;base64,${this.props.team.logo}`} width={this.props.width} height={this.props.height} alt={''} /> : ''}
       </div>
     );
   }

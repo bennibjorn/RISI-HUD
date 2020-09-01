@@ -5,6 +5,7 @@ import Avatar from "./Avatar";
 import Armor from "./../Indicators/Armor";
 import Bomb from "./../Indicators/Bomb";
 import Defuse from "./../Indicators/Defuse";
+import TeamLogo from "../MatchBar/TeamLogo";
 
 interface IProps {
   player: Player,
@@ -23,7 +24,11 @@ export default class PlayerBox extends React.Component<IProps> {
     return (
       <div className={`player ${player.state.health === 0 ? "dead" : ""} ${isObserved ? 'active' : ''}`}>
         <div className="player_data">
-          <Avatar player={player} height={57} showSkull={false}/>
+          {player.avatar ? (
+            <Avatar player={player} height={57} showSkull={false}/>
+          ) : (
+            <TeamLogo team={player.team} width={60} height={60} />
+          )}
           <div className="dead-stats">
             <div className="labels">
               <div className="stat-label">K</div>

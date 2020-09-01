@@ -54,6 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 8px;
 }
 
 .observed .main_row .grenade_container {
@@ -70,8 +71,8 @@
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: space-between;
+    flex-direction: row;
 }
 .observed.T {
     border-bottom: 6px solid var(--color-new-t);
@@ -90,8 +91,11 @@
     color: var(--color-new-ct)
 }
 
+.observed .main_row .username_container .username {
+    font-size: 25px;
+}
 .observed .main_row .username_container .real_name {
-    font-size: 7pt;
+    font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
 }
 
@@ -144,9 +148,11 @@
 .observed .avatar {
     align-self: flex-end;
     display: flex;
+    margin-right: 8px;
 }
 .observed .avatar img {
-    border-radius:50%;
+    height: 200px;
+    max-width: 140px;
 }
 .observed .stats_row .health_armor_container {
     display: flex;
