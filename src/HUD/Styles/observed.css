@@ -217,9 +217,6 @@
     display: flex;
 }
 
-.observed .stats_row .statistics {
-}
-
 .observed .stats_row .ammo .ammo_icon_container {
     display: flex;
     height: 100%;
