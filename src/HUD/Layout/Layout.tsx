@@ -14,6 +14,7 @@ import Killfeed from "../Killfeed/Killfeed";
 import MapSeries from "./../MatchBar/MapSeries";
 import Overview from "../Overview/Overview";
 import Tournament from "../Tournament/Tournament";
+import { Phase } from "../Phase/Phase";
 
 interface Props {
   game: CSGO,
@@ -69,6 +70,7 @@ export default class Layout extends React.Component<Props, State> {
         <Overview match={match} map={game.map} players={game.players || []} />
         <RadarMaps match={match} map={game.map} game={game}/>
         <MatchBar map={game.map} phase={game.phase_countdowns} bomb={game.bomb}/>
+        <Phase phase={game.phase_countdowns} map={game.map} />
 
         <SeriesBox map={game.map} phase={game.phase_countdowns} match={match} />
 
