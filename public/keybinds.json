@@ -14,5 +14,17 @@
     {
         "bind":"Alt+T",
         "action":"toggleTrivia"
+    },
+    {
+        "bind":"Alt+C",
+        "action":"toggleCams"
+    },
+    {
+        "bind":"Alt+M",
+        "action":"toggleUpcomingMatch"
+    },
+    {
+        "bind":"Alt+P",
+        "action":"togglePlayerPreview"
     }
 ]

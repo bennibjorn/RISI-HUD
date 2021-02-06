@@ -35,6 +35,7 @@ export const countries: any = {
     'BG' : 'Bulgaria',
     'BF' : 'Burkina Faso',
     'BI' : 'Burundi',
+    'CIS': 'CIS',
     'KH' : 'Cambodia',
     'CM' : 'Cameroon',
     'CA' : 'Canada',
@@ -246,7 +247,8 @@ export const countries: any = {
     'EH' : 'Western Sahara',
     'YE' : 'Yemen',
     'ZM' : 'Zambia',
-    'ZW' : 'Zimbabwe'
+    'ZW' : 'Zimbabwe',
+    'XK' : 'Kosovo'
 };
 
 export const getCountry = (iso: string) => {

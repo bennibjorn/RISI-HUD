@@ -1,6 +1,5 @@
 import React from 'react';
-import './../Styles/overviews.css';
-import { configs } from '../../App';
+import { actions, configs } from '../../App';
 import * as I from '../../api/interfaces';
 import PlayerOverview from '../PlayerOverview/PlayerOverview';
 import MatchOverview from '../MatchOverview/MatchOverview';
@@ -36,7 +35,7 @@ export default class Overview extends React.Component<IProps, IState> {
         this.state = {
             player: {
                 data: null,
-                show: false,
+                show: false
             },
             match: {
                 data: null,
@@ -78,6 +77,18 @@ export default class Overview extends React.Component<IProps, IState> {
                 }
             }, this.loadTeams);
         });
+        actions.on("toggleUpcomingMatch", () => {
+            this.setState(state => {
+                state.match.show = !state.match.show;
+                return state;
+            })
+        })
+        actions.on("togglePlayerPreview", () => {
+            this.setState(state => {
+                state.player.show = !state.player.show;
+                return state;
+            })
+        })
     }
     getVeto = () => {
         const { map, match } = this.props;
@@ -90,7 +101,7 @@ export default class Overview extends React.Component<IProps, IState> {
     renderPlayer = () => {
         const { player } = this.state;
         if(!player.data) return null;
-        return <PlayerOverview player={player.data} players={this.props.players} show={player.show} veto={this.getVeto()} />
+        return <PlayerOverview round={this.props.map.round + 1} player={player.data} players={this.props.players} show={player.show} veto={this.getVeto()} />
     }
     renderMatch = () => {
         const { match } = this.state;
