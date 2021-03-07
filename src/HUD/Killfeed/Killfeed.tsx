@@ -2,7 +2,7 @@ import React from 'react';
 import { GSI } from './../../App';
 import { KillEvent, Player } from 'csgogsi-socket';
 import Kill from './Kill';
-import './../Styles/killfeed.css';
+import './killfeed.scss';
 
 
 export interface ExtendedKillEvent extends KillEvent {
@@ -54,12 +54,15 @@ export default class Killfeed extends React.Component<any, { events: (BombEvent 
             }
         });
 
+        /*
         GSI.on("bombPlant", player => {
             this.addBombEvent(player, 'plant');
         })
         GSI.on("bombDefuse", player => {
             this.addBombEvent(player, 'defuse');
         })
+
+        */
 
 	}
 	render() {

@@ -1,16 +1,25 @@
 import React from 'react';
+import { avatars } from './../../api/avatars';
 
 import { Skull } from './../../assets/Icons';
-import { Player } from 'csgogsi-socket';
 
-export default class Avatar extends React.Component<{player: Player, height?: number, width?: number, showSkull?: boolean}> {
-  render(){
-    const url = this.props.player.avatar || '';
-    return (
-      <div className={`avatar`}>
-          <img src={this.props.showSkull ? Skull : url} height={this.props.height} width={this.props.width} alt={''} />
-      </div>
-    );
-  }
-
+interface IProps {
+	steamid: string;
+	height?: number;
+	width?: number;
+	showSkull?: boolean;
+}
+export default class Avatar extends React.Component<IProps> {
+	render() {
+		const avatarData = avatars[this.props.steamid];
+		return (
+			<div className={`avatar`}>
+				{this.props.showSkull ? (
+					<Skull height={this.props.height} width={this.props.width} />
+				) : (
+					<img src={avatarData.url || ''} height={this.props.height} width={this.props.width} alt={''} />
+				)}
+			</div>
+		);
+	}
 }

@@ -4,19 +4,21 @@ import { avatars } from './../../api/avatars';
 import { apiUrl } from '../../api/api';
 import { getCountry } from '../countries';
 import { Player } from 'csgogsi';
+import "./playeroverview.scss";
 
 interface IProps {
     player: I.Player,
     show: boolean,
     veto: I.Veto | null
     players: Player[],
+    round: number
 }
 
 export default class PlayerOverview extends React.Component<IProps> {
     sum = (data: number[]) => data.reduce((a, b) => a + b, 0);
 
     getData = () => {
-        const { veto, player } = this.props;
+        const { veto, player, round } = this.props;
         if(!player || !veto || !veto.rounds) return null;
         const stats = veto.rounds.map(round => round.players[player.steamid]).filter(data => !!data);
         const overall = {
@@ -25,7 +27,7 @@ export default class PlayerOverview extends React.Component<IProps> {
             killshs: this.sum(stats.map(round => round.killshs)),
         };
         const data = {
-            adr: stats.length !== 0 ? (overall.damage/stats.length).toFixed(0) : '0',
+            adr: stats.length !== 0 ? (overall.damage/(round-1)).toFixed(0) : '0',
             kills: overall.kills,
             killshs: overall.kills,
             kpr: stats.length !== 0 ? (overall.kills/stats.length).toFixed(2) : 0,
@@ -50,9 +52,10 @@ export default class PlayerOverview extends React.Component<IProps> {
         const data = this.getData();
         if(!player || !veto || !veto.rounds || !data) return null;
         let url = null;
-        const avatarData = avatars.find(avatar => avatar.steamid === player.steamid);
-        if(avatarData && (avatarData.custom || avatarData.steam)){
-            url = avatarData.custom || avatarData.steam;
+        // const avatarData = avatars.find(avatar => avatar.steamid === player.steamid);
+        const avatarData = avatars[player.steamid];
+        if(avatarData && avatarData.url){
+            url = avatarData.url;
         }
         const countryName = player.country ? getCountry(player.country) : null;
         let side = '';

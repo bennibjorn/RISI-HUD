@@ -1,7 +1,7 @@
 import React from 'react';
-import './../Styles/sideboxes.css'
-
+import './sideboxes.scss'
 import {configs} from './../../App';
+import isSvg from '../isSvg';
 
 export default class SideBox extends React.Component<{ side: 'left' | 'right', hide: boolean}, { title: string, subtitle: string, image?: string }> {
 	constructor(props: any) {
@@ -17,28 +17,30 @@ export default class SideBox extends React.Component<{ side: 'left' | 'right', h
             if(!data) return;
             const display = data.display_settings;
             if(!display) return;
-            if(display[`${this.props.side}_title`]){
+            if(`${this.props.side}_title` in display){
                 this.setState({title:display[`${this.props.side}_title`]})
             }
-            if(display[`${this.props.side}_subtitle`]){
+            if(`${this.props.side}_subtitle` in display){
                 this.setState({subtitle:display[`${this.props.side}_subtitle`]})
             }
-            if(display[`${this.props.side}_image`]){
+            if(`${this.props.side}_image` in display){
                 this.setState({image:display[`${this.props.side}_image`]})
             }
         });
 	}
 	
 	render() {
-        if(!this.state.title) return '';
+        const { image, title, subtitle} = this.state;
+        if(!title) return '';
+        const encoding = image && isSvg(Buffer.from(image, 'base64')) ? 'svg+xml':'png';
 		return (
 			<div className={`sidebox ${this.props.side} ${this.props.hide ? 'hide':''}`}>
                 <div className="title_container">
-                    <div className="title">{this.state.title}</div>
-                    <div className="subtitle">{this.state.subtitle}</div>
+                    <div className="title">{title}</div>
+                    <div className="subtitle">{subtitle}</div>
                 </div>
                 <div className="image_container">
-                    {this.state.image ? <img src={`data:image/jpeg;base64,${this.state.image}`} id={`image_left`} alt={'Left'}/>:''}
+                    {this.state.image ? <img src={`data:image/${encoding};base64,${image}`} id={`image_left`} alt={'Left'}/>:''}
                 </div>
             </div>
 		);
