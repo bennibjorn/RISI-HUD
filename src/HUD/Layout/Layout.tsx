@@ -3,7 +3,7 @@ import TeamBox from "./../Players/TeamBox";
 import MatchBar from "../MatchBar/MatchBar";
 import SeriesBox from "../MatchBar/SeriesBox";
 import Observed from "./../Players/Observed";
-import { CSGO, Team } from "csgogsi-socket";
+import { CSGO, Team, Score } from "csgogsi-socket";
 import { Match } from "../../api/interfaces";
 import RadarMaps from "./../Radar/RadarMaps";
 import Trivia from "../Trivia/Trivia";
@@ -38,7 +38,7 @@ export default class Layout extends React.Component<Props, State> {
   }
 
   componentDidMount(){
-    GSI.on('roundEnd', score => {
+    GSI.on('roundEnd', (score: Score) => {
       this.setState({ winner: score.winner, showWin: true }, () => {
         setTimeout(() => {
           this.setState({showWin: false})
@@ -53,6 +53,16 @@ export default class Layout extends React.Component<Props, State> {
       }
     });
   }
+  getVeto = () => {
+    const { game, match } = this.props;
+    const { map } = game;
+    if (!match) return null;
+    const mapName = map.name.substring(map.name.lastIndexOf('/') + 1);
+    const veto = match.vetos.find(veto => veto.mapName === mapName);
+    if (!veto) return null;
+    return veto;
+  }
+
 
   render() {
     const { game, match } = this.props;
@@ -63,7 +73,6 @@ export default class Layout extends React.Component<Props, State> {
     const rightPlayers = game.players.filter(player => player.team.side === right.side);
     const isFreezetime = (game.round && game.round.phase === "freezetime") || game.phase_countdowns.phase === "freezetime";
     const { forceHide } = this.state;
-
     return (
       <div className="layout">
         <Killfeed />
@@ -76,7 +85,7 @@ export default class Layout extends React.Component<Props, State> {
 
         <Tournament />
 
-        <Observed player={game.player} />
+        <Observed player={game.player} veto={this.getVeto()} round={game.map.round+1} />
 
         <TeamBox team={left} players={leftPlayers} side="left" current={game.player} isFreezetime={isFreezetime}/>
         <TeamBox team={right} players={rightPlayers} side="right" current={game.player} isFreezetime={isFreezetime} />
@@ -90,7 +99,7 @@ export default class Layout extends React.Component<Props, State> {
           <MoneyBox
             team={left.side}
             side="left"
-            loss={left.consecutive_round_losses * 500 + 1400}
+            loss={Math.max(left.consecutive_round_losses * 500 + 1400, 3400)}
             equipment={leftPlayers.map(player => player.state.equip_value).reduce((pre, now) => pre + now, 0)}
             money={leftPlayers.map(player => player.state.money).reduce((pre, now) => pre + now, 0)}
             show={isFreezetime && !forceHide}
@@ -102,7 +111,7 @@ export default class Layout extends React.Component<Props, State> {
           <MoneyBox
             team={right.side}
             side="right"
-            loss={right.consecutive_round_losses * 500 + 1400}
+            loss={Math.max(left.consecutive_round_losses * 500 + 1400, 3400)}
             equipment={rightPlayers.map(player => player.state.equip_value).reduce((pre, now) => pre + now, 0)}
             money={rightPlayers.map(player => player.state.money).reduce((pre, now) => pre + now, 0)}
             show={isFreezetime && !forceHide}

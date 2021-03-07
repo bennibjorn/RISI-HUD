@@ -154,6 +154,17 @@ export default class TeamBox extends React.Component<IProps, IState> {
       }, this.resetWin);
     });
   }
+  getRoundLabel = () => {
+    const { map } = this.props;
+    const round = map.round + 1;
+    if (round <= 30) {
+      return `Round ${round}/30`;
+    }
+    const additionalRounds = round - 30;
+    const OT = Math.ceil(additionalRounds/6);
+    return `OT ${OT} (${additionalRounds - (OT - 1)*6}/6)`;
+  }
+
   render() {
     const { defusing, planting, winState } = this.state;
     const time = stringToClock(this.props.phase.phase_ends_in);
@@ -180,7 +191,7 @@ export default class TeamBox extends React.Component<IProps, IState> {
           <div className={`score left ${left.side}`}>{left.score}</div>
           <div id="timer">
             <div id={`round_timer_text`} className={isPlanted ? "hide":""}>{time}</div>
-            <div id="round_now" className={isPlanted ? "hide":""}>Round {this.props.map.round + 1}/30</div>
+            <div id="round_now" className={isPlanted ? "hide":""}>{this.getRoundLabel()}</div>
             <Bomb />
           </div>
           <div className={`score right ${right.side}`}>{right.score}</div>

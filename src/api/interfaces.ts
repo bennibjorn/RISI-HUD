@@ -6,6 +6,7 @@ export interface Player {
   avatar: string;
   country: string;
   steamid: string;
+	extra: Record<string, string>;
 }
 
 export interface Team {
@@ -14,6 +15,7 @@ export interface Team {
   country: string;
   shortName: string;
   logo: string;
+  extra: Record<string, string>;
 }
 /*
 export interface HUD {

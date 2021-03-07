@@ -5,7 +5,7 @@ import api, { port, isDev } from './api/api';
 import { getAvatarURL } from './api/avatars';
 import ActionManager, { ConfigManager } from './api/actionManager';
 
-import CSGOGSI, { Player, CSGO, PlayerExtension } from "csgogsi-socket";
+import CSGOGSI, { CSGO, PlayerExtension, Player } from "csgogsi-socket";
 import { Match } from './api/interfaces';
 
 export const { GSI, socket } = CSGOGSI(isDev ? `localhost:${port}` : '/', "update");
@@ -35,7 +35,7 @@ class App extends React.Component<any, { match: Match | null, players: Player[],
 			return;
 		}
 
-		const loaded = GSI.players.map(player => player.steamid);
+		const loaded = GSI.players.map((player: Player) => player.steamid);
 
 		const extensioned = await api.players.get();
 
@@ -50,7 +50,8 @@ class App extends React.Component<any, { match: Match | null, players: Player[],
 					realName: `${player.firstName} ${player.lastName}`,
 					steamid: player.steamid,
 					country: player.country,
-					avatar: player.avatar
+					avatar: player.avatar,
+					extra: player.extra
 				})
 			);
 
@@ -116,7 +117,7 @@ class App extends React.Component<any, { match: Match | null, players: Player[],
 		socket.on("update_mirv", (data: any) => {
 			GSI.digestMIRV(data);
 		})
-		GSI.on('data', game => {
+		GSI.on('data', (game: CSGO) => {
 			if (!this.state.game || this.state.steamids.length) this.verifyPlayers(game);
 			this.setState({ game }, () => {
 				if(!this.state.checked) this.loadMatch();
@@ -148,14 +149,14 @@ class App extends React.Component<any, { match: Match | null, players: Player[],
 		if (match.left.id) {
 			const left = await api.teams.getOne(match.left.id);
 			
-			if(!isReversed) GSI.setTeamOne({ id: left._id, name: left.name, country: left.country, logo: left.logo, map_score: match.left.wins });
-			else GSI.setTeamTwo({ id: left._id, name: left.name, country: left.country, logo: left.logo, map_score: match.left.wins });
+			if(!isReversed) GSI.setTeamOne({ id: left._id, name: left.name, country: left.country, logo: left.logo, map_score: match.left.wins, extra: left.extra });
+			else GSI.setTeamTwo({ id: left._id, name: left.name, country: left.country, logo: left.logo, map_score: match.left.wins, extra: left.extra });
 		}
 		if (match.right.id) {
 			const right = await api.teams.getOne(match.right.id);
 
-			if(!isReversed) GSI.setTeamTwo({ id: right._id, name: right.name, country: right.country, logo: right.logo, map_score: match.right.wins });
-			else GSI.setTeamOne({ id: right._id, name: right.name, country: right.country, logo: right.logo, map_score: match.right.wins });
+			if(!isReversed) GSI.setTeamTwo({ id: right._id, name: right.name, country: right.country, logo: right.logo, map_score: match.right.wins, extra: right.extra });
+			else GSI.setTeamOne({ id: right._id, name: right.name, country: right.country, logo: right.logo, map_score: match.right.wins, extra: right.extra });
 		}
 	}
 	render() {

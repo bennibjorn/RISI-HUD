@@ -5,6 +5,7 @@ import Avatar from "./Avatar";
 import TeamLogo from "./../MatchBar/TeamLogo";
 import "./../Styles/observed.css";
 import { ArmorHelmetCT, ArmorHelmetT, ArmorFullCT, ArmorFullT, HealthFullCT, HealthFullT, BulletsCT, BulletsT } from './../../assets/Icons';
+import { Veto } from "../../api/interfaces";
 
 
 const armor = {
@@ -29,7 +30,18 @@ class Statistic extends React.PureComponent<{ label: string; value: string | num
   }
 }
 
-export default class Observed extends React.Component<{ player: Player | null }> {
+export default class Observed extends React.Component<{ player: Player | null, veto: Veto | null, round: number }> {
+	getAdr = () => {
+		const { veto, player } = this.props;
+		if (!player || !veto || !veto.rounds) return null;
+		const damageInRounds = veto.rounds
+			.map((round) => round.players[player.steamid])
+			.filter((data) => !!data)
+			.map((roundData) => roundData.damage);
+		return damageInRounds.reduce((a, b) => a + b, 0) / (this.props.round - 1);
+	};
+
+
 	render() {
 		if (!this.props.player) return '';
 		const { player } = this.props;
@@ -38,6 +50,7 @@ export default class Observed extends React.Component<{ player: Player | null }>
 		const currentWeapon = weapons.filter(weapon => weapon.state === "active")[0];  
 		const grenades = weapons.filter(weapon => weapon.type === "Grenade");
 		const ratio = stats.deaths === 0 ? stats.kills : stats.kills/stats.deaths;
+		const adr = this.getAdr();
 		return (
 			<div className={`observed ${player.team.side}`}>
 				<div className="main_row">
@@ -48,10 +61,12 @@ export default class Observed extends React.Component<{ player: Player | null }>
 						<div className="real_name">{player.realName}</div>
 					</div>
 					<div className="grenade_container">
-						{grenades.map((grenade, index) => [
-							<Weapon key={grenade.name + index} weapon={grenade.name} active={grenade.state === "active"} isGrenade />,
-							grenade.ammo_reserve === 2 ? <Weapon key={index} weapon={grenade.name} active={grenade.state === "active"} isGrenade /> : null
-						])}
+						{grenades.map(grenade => <React.Fragment key={`${player.steamid}_${grenade.name}_${grenade.ammo_reserve || 1}`}>
+							<Weapon weapon={grenade.name} active={grenade.state === "active"} isGrenade />
+							{ 
+							grenade.ammo_reserve === 2 ? <Weapon weapon={grenade.name} active={grenade.state === "active"} isGrenade /> : null }
+						</React.Fragment>)}
+
 						</div>
 				</div>
 				<div className="stats_row">
@@ -66,6 +81,9 @@ export default class Observed extends React.Component<{ player: Player | null }>
 						<Statistic label={"A"} value={stats.assists} />
 						<Statistic label={"D"} value={stats.deaths} />
 						<Statistic label={"K/D"} value={ratio.toFixed(2)} />
+						{/* TODO: ADR is not correct */}
+						{/* {adr !== null ? <Statistic label={"ADR"} value={adr.toFixed(0)} /> : null} */}
+						
 					</div>
 					<div className="ammo">
 						<div className="ammo_icon_container">
