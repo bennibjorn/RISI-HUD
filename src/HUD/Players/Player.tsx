@@ -25,7 +25,7 @@ export default class PlayerBox extends React.Component<IProps> {
       <div className={`player ${player.state.health === 0 ? "dead" : ""} ${isObserved ? 'active' : ''}`}>
         <div className="player_data">
           {player.avatar ? (
-            <Avatar player={player} height={57} showSkull={false}/>
+            <Avatar player={player} head={true} height={57} showSkull={false}/>
           ) : (
             <TeamLogo team={player.team} width={60} height={60} />
           )}

@@ -95,25 +95,6 @@ class App extends React.Component<any, { match: Match | null, players: Player[],
 		socket.on("refreshHUD", () => {
 			window.top.location.reload();
 		});
-
-		/*if (href.indexOf('/huds/')) {
-
-			const segment = href.substr(href.indexOf('/huds/') + 6);
-			const name = segment.substr(0, segment.lastIndexOf('/'));
-
-			socket.on("readyToRegister", () => {
-				socket.emit("register", name);
-			});
-			socket.on(`hud_config`, (data: any) => {
-				configs.save(data);
-			});
-			socket.on(`hud_action`, (data: any) => {
-				actions.execute(data.action, data.data);
-			});
-			socket.on('keybindAction', (action: string) => {
-				actions.execute(action);
-			});
-		}*/
 		socket.on("update_mirv", (data: any) => {
 			GSI.digestMIRV(data);
 		})

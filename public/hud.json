@@ -1,10 +1,10 @@
 {
     "name":"RÍSÍ HUD",
-    "version":"1.0.2",
+    "version":"1.1.0",
     "author":"Benni",
     "legacy": false,
     "radar": true,
-    "killfeed": true,
+    "killfeed": false,
     "boltobserv":{
         "css":true,
         "maps":true
